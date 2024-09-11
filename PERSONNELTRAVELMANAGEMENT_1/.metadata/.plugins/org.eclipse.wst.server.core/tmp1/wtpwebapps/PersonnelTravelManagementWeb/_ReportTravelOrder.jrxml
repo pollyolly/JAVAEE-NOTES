@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-03-09T05:38:37 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="_ReportTravelOrder" pageWidth="595" pageHeight="600" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="70a0f437-b798-49f0-a383-c6f688d4b11d">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="toid" class="java.lang.Integer" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT CONCAT(REPLACE(REPLACE(REPLACE(tos.todate,'-',''),':',''),' ','')) AS tono
+, DATE_FORMAT(tos.todate, '%b %c, %Y') AS dyt
+, emp.nym
+, emp.`department`
+, tos.`purpose`
+, CONCAT(IFNULL(des.`code`,''),' ',IFNULL(des.`state`,''),' ',IFNULL(des.`city`,''),', ',IFNULL(des.`country`,'')) AS destination
+, prior.`priority`
+, stat.`status`
+, IFNULL(app.nym, 'Not Available') AS appnym
+, tos.id
+, tos.`priorityid`
+, tos.`employeeid`
+, tos.`statusid`
+, tos.`officerid`
+, tos.`destinationid`
+FROM ptms_t_travelorder AS tos
+INNER JOIN ptms_r_priority AS prior
+ON tos.priorityid = prior.`id`
+LEFT JOIN (SELECT  emp.`id`, CONCAT(emp.`lastname`,', ',emp.`firstname`,' ',emp.`middlename`) AS nym, dept.`department`
+FROM ptms_m_employee AS emp
+INNER JOIN ptms_r_department AS dept
+ON emp.`departmentid` = dept.`id`) AS emp
+ON tos.employeeid = emp.`id`
+INNER JOIN ptms_r_status AS stat
+ON tos.statusid = stat.`id`
+INNER JOIN ptms_r_destination AS des
+ON tos.`destinationid` = des.`id`
+LEFT JOIN (SELECT approv.id, CONCAT(emp.`lastname`,', ',emp.`firstname`,' ',IFNULL(emp.`middlename`,''),', (',IFNULL(post.`position`,'User'),')' ) AS nym FROM ptms_m_approvingofficer AS approv
+INNER JOIN ptms_m_employee AS emp
+ON approv.employeeid = emp.`id`
+LEFT JOIN ptms_r_position AS post
+ON emp.`positionid` = post.`id`) AS app
+ON tos.officerid = app.id
+WHERE tos.id =  $P{toid}]]>
+	</queryString>
+	<field name="tono" class="java.lang.String"/>
+	<field name="dyt" class="java.lang.String"/>
+	<field name="nym" class="java.lang.String"/>
+	<field name="department" class="java.lang.String"/>
+	<field name="purpose" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="destination" class="java.lang.String"/>
+	<field name="priority" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="appnym" class="java.lang.String"/>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="priorityid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="employeeid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="statusid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="officerid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="destinationid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="tono1" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{tono}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="0" width="595" height="72" isPrintWhenDetailOverflows="true" backcolor="#006699" uuid="ccdd61ac-33c0-48af-8795-86f2e6a64cbe">
+					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement positionType="Float" x="390" y="56" width="110" height="20" forecolor="#FFFFFF" uuid="9a9ba176-7e29-4613-8621-c81e8425b302"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Travel Order No:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="15" width="594" height="26" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" uuid="991b3c8e-9106-4e68-9fdd-926430d71e9a">
+						<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="20" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Business Productivity Solution]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="1" y="41" width="594" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" uuid="6178c861-b40c-4c4d-a863-152a5878b7bf">
+						<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Personnel Travel Management]]></text>
+				</staticText>
+				<image scaleImage="FillFrame">
+					<reportElement isPrintRepeatedValues="false" x="70" y="0" width="75" height="70" isPrintWhenDetailOverflows="true" uuid="27261819-71d0-41fc-8b41-6263edc5cadb">
+						<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA["C:/Users/roco/Desktop/PERSONNELTRAVELMANAGEMENT_1/PersonnelTravelManagementWeb/WebContent/assets/img/BPS_LOGO.png"]]></imageExpression>
+				</image>
+				<textField>
+					<reportElement x="502" y="56" width="90" height="22" forecolor="#FFFFFF" uuid="c8419b76-2bb1-4d1f-8660-1a853ac48157"/>
+					<textElement>
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tono}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement key="" positionType="Float" isPrintRepeatedValues="false" x="-20" y="2" width="595" height="28" isPrintInFirstWholeBand="true" forecolor="#050505" uuid="b1aa0cec-2e2d-49e8-a494-083371a0bd31">
+					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="20" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Travel Order]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement x="340" y="20" width="103" height="21" uuid="52f89386-a4c8-416c-accc-e505f093ef87"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Travel Order Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="20" width="90" height="20" uuid="6eca5ba7-ce3a-41a1-8abe-6fd5ee952ab3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Personnel:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="67" width="90" height="20" uuid="7ffd8fa1-8833-4d68-8cac-8555f9351dd3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Destination:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="87" width="200" height="33" uuid="04913ed7-c14d-4aae-aee5-dcfdbe92da52"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{destination}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="387" y="69" width="100" height="18" uuid="5153b905-26e0-4ed2-9e57-e1d24f9302bc"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{priority}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="339" y="67" width="50" height="18" uuid="b09b1d92-ddb0-41f4-8e00-c1e182545c6d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Priority:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="41" width="200" height="19" uuid="26a153a7-8d11-4706-b61d-25f7e4dd2b59"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nym}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMM d, yyyy">
+				<reportElement x="443" y="20" width="100" height="20" uuid="63987907-4f41-4a7e-8f0f-978e9caf2ab9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dyt}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="304" splitType="Stretch">
+			<staticText>
+				<reportElement x="50" y="0" width="60" height="20" uuid="74dfb6b7-a99f-462f-ab8e-804da9bf1fb8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Purpose:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="20" width="300" height="30" uuid="0f43b2e1-69b7-4800-87bb-931df3a228fe"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{purpose}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="339" y="240" width="80" height="16" uuid="07ee9a9c-61f2-479e-89cb-4553eaa20706"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Approved By:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="380" y="260" width="120" height="30" uuid="a7ba7307-4841-46e5-8a53-bab37b8e0620"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{appnym}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

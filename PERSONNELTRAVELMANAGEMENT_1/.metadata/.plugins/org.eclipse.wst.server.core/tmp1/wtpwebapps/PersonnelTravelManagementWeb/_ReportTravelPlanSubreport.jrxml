@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-04-10T18:14:25 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="_ReportTravelPlanSubreport" pageWidth="802" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Error" uuid="3ccd01fe-2eb3-4081-bd3d-e62a6853e1dc">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bps_ptms"/>
+	<parameter name="tono" class="java.lang.String"/>
+	<parameter name="tpid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT lst.id, lst.`tono`,lst.`pcn`, lst.`file`, typ.`type`, sv.`service`, sv.`amount`
+	, cr.`from` as cFrom, cr.`to` as cTo,cr.`pickup`, cr.`dropoff`
+	, htl.`checkin`, htl.`checkout`
+	, fl.`departure`, fl.`return`, fl.`stopover`,fl.`from` as flFrom, fl.`to` as flTo
+	,misc.`vendor` as miscVendor, misc.`description` miscDesc, misc.amount as miscAmount, sp.`company`
+	FROM ptms_t_travelplanlist AS lst
+	LEFT JOIN ptms_m_car AS cr
+	ON lst.`id` = cr.`planlistid`
+	LEFT JOIN ptms_m_hotel AS htl
+	ON lst.`id` = htl.`planlistid`
+	LEFT JOIN ptms_m_flight AS fl
+	ON lst.`id` = fl.`planlistid`
+	LEFT JOIN ptms_m_miscellaneous AS misc
+	ON lst.`id` = misc.`planlistid`
+	INNER JOIN ptms_r_servicetype AS typ
+	ON lst.`typeid` = typ.`id`
+	LEFT JOIN ptms_m_services AS sv
+	ON lst.serviceid = sv.id
+	LEFT JOIN ptms_m_serviceprovider AS sp
+	ON lst.`serviceproviderid` = sp.`id`
+	WHERE lst.tono =   $P{tono} AND lst.travelplanid =  $P{tpid} 
+	ORDER BY lst.`id` DESC]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pcn" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="file" class="java.lang.Object">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="service" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="amount" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cFrom" class="java.lang.String"/>
+	<field name="cTo" class="java.lang.String"/>
+	<field name="pickup" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dropoff" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="checkin" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="checkout" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="departure" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="return" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="stopover" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="flFrom" class="java.lang.String"/>
+	<field name="flTo" class="java.lang.String"/>
+	<field name="miscVendor" class="java.lang.String"/>
+	<field name="miscDesc" class="java.lang.String"/>
+	<field name="miscAmount" class="java.math.BigDecimal"/>
+	<field name="company" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="165" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="30" backcolor="#006699" uuid="f13f39f0-9ade-4867-babe-b340d6a41955">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+				</reportElement>
+				<textField>
+					<reportElement x="43" y="0" width="137" height="30" forecolor="#FFFFFF" uuid="760e013b-fd68-45f0-9f98-682213670e18">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement x="0" y="0" width="40" height="30" uuid="771e1238-7ca9-4a0c-a7f7-c6bc47026f10">
+						<printWhenExpression><![CDATA[$F{type}.equals( "Car Rental" ) == true]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA["C:/Users/roco/Desktop/PERSONNELTRAVELMANAGEMENT_1/PersonnelTravelManagementWeb/WebContent/assets/img/car.PNG"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="0" y="0" width="40" height="30" uuid="cc077745-befb-45df-bcbc-fad4b9851f74">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals( "Flight" ) == true]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA["C:/Users/roco/Desktop/PERSONNELTRAVELMANAGEMENT_1/PersonnelTravelManagementWeb/WebContent/assets/img/plane.PNG"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="0" y="0" width="40" height="30" uuid="3e28ebed-f28f-49c5-8e4c-7bfd6af09261">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals( "Hotel" ) == true]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA["C:/Users/roco/Desktop/PERSONNELTRAVELMANAGEMENT_1/PersonnelTravelManagementWeb/WebContent/assets/img/hotel.PNG"]]></imageExpression>
+				</image>
+			</frame>
+			<textField>
+				<reportElement positionType="Float" mode="Transparent" x="160" y="60" width="100" height="20" isRemoveLineWhenBlank="true" uuid="aacc6f9a-1042-4c2a-8d9f-5604a5aa79a6">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pcn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="" positionType="Float" mode="Transparent" x="30" y="60" width="130" height="20" isRemoveLineWhenBlank="true" uuid="09da821b-a515-439f-ab9f-af7fca352e63">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[PaymentConfirmation#:]]></text>
+			</staticText>
+			<textField pattern="P #,##0.00#;(#,##0.00#)" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="660" y="60" width="100" height="20" isRemoveLineWhenBlank="true" uuid="8420779a-1229-4d82-a523-dafc46b83828">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="660" y="30" width="100" height="30" uuid="b7dd7295-0d7a-44a2-a9a3-982d5f6440cc"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="360" y="60" width="280" height="60" isRemoveLineWhenBlank="true" uuid="518142a5-dd45-4fb3-a1cb-40b8a72ba68d">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{service}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="360" y="30" width="100" height="30" uuid="595ecb5a-cfc8-49ca-9879-b4aa3a948b4d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Services]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" mode="Transparent" x="130" y="80" width="100" height="20" isRemoveLineWhenBlank="true" uuid="8572cdf1-1474-491e-be88-635be5167bc7">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" mode="Transparent" x="30" y="80" width="100" height="20" isRemoveLineWhenBlank="true" uuid="455132c7-cacb-4221-8a66-d331344991b9">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{type}.equals( "Miscellaneous" ) != true]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Service Provider:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="30" width="100" height="30" uuid="07f9364f-0797-4c4e-baec-c79d1bbeecb5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Details]]></text>
+			</staticText>
+			<frame>
+				<reportElement positionType="Float" x="30" y="100" width="250" height="60" isRemoveLineWhenBlank="true" uuid="d5cd7821-6e3d-458e-b4b6-56e62affdaff">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{type}.equals( "Flight" )  == true]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement positionType="Float" mode="Transparent" x="-1" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="72e40158-82ce-428b-bfaf-e089029ca380">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals( "Flight" )  == true]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[Departure:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" mode="Transparent" x="139" y="0" width="40" height="20" isRemoveLineWhenBlank="true" uuid="9ac8af50-0ace-4f02-b29f-38eab4eb7bba">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals( "Flight" )  == true]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[Return:]]></text>
+				</staticText>
+				<textField pattern="MMM d, yyyy">
+					<reportElement positionType="Float" mode="Transparent" x="59" y="0" width="80" height="20" isRemoveLineWhenBlank="true" uuid="0df8eeb6-397a-4445-8480-fe44f9be123e">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals( "Flight" )  == true]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{departure}]]></textFieldExpression>
+				</textField>
+				<textField pattern="MMM d, yyyy">
+					<reportElement positionType="Float" mode="Transparent" x="179" y="0" width="70" height="20" isRemoveLineWhenBlank="true" uuid="a680b4a2-fdeb-4e93-bb65-b19f2e1f53b6">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals( "Flight" )  == true]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{return}]]></textFieldExpression>
+				</textField>
+				<textField pattern="">
+					<reportElement key="" positionType="Float" mode="Transparent" x="59" y="20" width="100" height="20" isRemoveLineWhenBlank="true" uuid="cf4a1d7a-53dc-48d0-b569-7c7a9d2b06f2">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals( "Flight" )  == true]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{stopover}.intValue()  == 1 ?  "YES" :  "No"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="" positionType="Float" mode="Transparent" x="-1" y="20" width="60" height="20" isRemoveLineWhenBlank="true" uuid="b3b63795-38bc-4b7b-9fb2-4f253867ae1d">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals( "Flight" )  == true]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[StopOver:]]></text>
+				</staticText>
+				<textField>
+					<reportElement positionType="Float" mode="Transparent" x="39" y="40" width="70" height="20" isRemoveLineWhenBlank="true" uuid="7677e156-ab5f-4544-8d34-c5df97d78d06">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals( "Flight" )  == true]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{flFrom}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" mode="Transparent" x="-1" y="40" width="40" height="20" isRemoveLineWhenBlank="true" uuid="56f14434-51ee-4830-8b06-92edf397c9bf">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals( "Flight" )  == true]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[From:]]></text>
+				</staticText>
+				<textField>
+					<reportElement positionType="Float" mode="Transparent" x="139" y="40" width="100" height="20" isRemoveLineWhenBlank="true" uuid="e745c93b-8658-46e8-829a-d6c0cdf50286">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals( "Flight" )  == true]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{flTo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" mode="Transparent" x="115" y="40" width="24" height="20" isRemoveLineWhenBlank="true" uuid="3c443bac-2953-4148-a216-f2c8e7f87337">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals( "Flight" )  == true]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[To:]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="30" y="101" width="315" height="18" isRemoveLineWhenBlank="true" uuid="86446b34-22fc-4bc5-98b4-4fc7758c83a7">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{type}.equals( "Hotel" ) == true]]></printWhenExpression>
+				</reportElement>
+				<textField pattern="MMM d, yyyy">
+					<reportElement key="" positionType="Float" mode="Transparent" x="210" y="0" width="100" height="18" isRemoveLineWhenBlank="true" uuid="9a5df8f1-5903-4bdf-8297-47483cb815a9">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals("Hotel") == true]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{checkout}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="" positionType="Float" mode="Transparent" x="146" y="0" width="64" height="18" isRemoveLineWhenBlank="true" uuid="7d2feee4-dd33-4061-b0a0-0d61971e788f">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals("Hotel") == true]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[Check-Out:]]></text>
+				</staticText>
+				<textField pattern="MMM d, yyyy">
+					<reportElement key="" positionType="Float" mode="Transparent" x="55" y="0" width="80" height="18" isRemoveLineWhenBlank="true" uuid="314e40e6-9de6-4548-8407-f5930feea607">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals("Hotel") == true]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{checkin}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="" positionType="Float" mode="Transparent" x="0" y="0" width="52" height="18" isRemoveLineWhenBlank="true" uuid="992d8fcc-93f0-4301-9116-02079543c896">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<printWhenExpression><![CDATA[$F{type}.equals("Hotel") == true]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[Check-In:]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="29" y="101" width="312" height="40" isRemoveLineWhenBlank="true" uuid="d297fb27-3a15-4999-aee5-ec9a10c1ccf8">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{type}.equals( "Car Rental" ) == true]]></printWhenExpression>
+				</reportElement>
+				<textField>
+					<reportElement x="33" y="0" width="93" height="19" isRemoveLineWhenBlank="true" uuid="f3fafce3-6385-4551-b03a-06baaf64abd5">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cFrom}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="33" height="19" isRemoveLineWhenBlank="true" uuid="837a7eb0-bb02-49f5-937a-e8974901f30b">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[From:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="127" y="0" width="27" height="20" isRemoveLineWhenBlank="true" uuid="e3f91cf6-12d9-497e-8252-2d98efc2b38a">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[To:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="154" y="0" width="70" height="20" isRemoveLineWhenBlank="true" uuid="384d4e74-3e02-426d-8164-f55f697d80f8">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cTo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="48" y="20" width="100" height="19" isRemoveLineWhenBlank="true" uuid="cf7cf8f3-3e44-426c-9a65-2e5f8f684717">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pickup}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="20" width="48" height="19" isRemoveLineWhenBlank="true" uuid="9dcf2f88-9272-431e-9dd3-900e69fcfbac">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[Pick-Up:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="203" y="20" width="100" height="20" isRemoveLineWhenBlank="true" uuid="61c9b9db-8185-4790-8225-2a2d2bc4fd54">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dropoff}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="149" y="20" width="54" height="20" isRemoveLineWhenBlank="true" uuid="d75b88ba-db5e-4c82-a289-59f522976411">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[Drop-Off:]]></text>
+				</staticText>
+			</frame>
+			<textField>
+				<reportElement x="79" y="79" width="100" height="23" isRemoveLineWhenBlank="true" uuid="ae8b05f2-ffcb-43a7-adac-b71d73444930">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{type}.equals( "Miscellaneous" ) == true]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{miscVendor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="31" y="79" width="47" height="23" isRemoveLineWhenBlank="true" uuid="090a26dd-6793-4ee1-954e-453a230a1398">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{type}.equals( "Miscellaneous" ) == true]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Vendor:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="360" y="61" width="280" height="59" isRemoveLineWhenBlank="true" uuid="c0301742-39c2-4223-855c-680d97720868">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{type}.equals( "Miscellaneous" ) == true]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{miscDesc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="288" y="56" width="72" height="23" isRemoveLineWhenBlank="true" uuid="39fdbc6d-5068-4085-97b7-7836072c6b17">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{type}.equals( "Miscellaneous" ) == true]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Description:]]></text>
+			</staticText>
+			<textField pattern="P #,##0.00#;(#,##0.00#)">
+				<reportElement x="660" y="60" width="100" height="21" isRemoveLineWhenBlank="true" uuid="f5928152-73e7-477f-abac-4d07696996a9">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{type}.equals( "Miscellaneous" ) == true]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{miscAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

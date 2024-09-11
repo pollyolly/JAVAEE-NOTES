@@ -1,0 +1,62 @@
+package com.Controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.TravelDa.AccountDa;
+import com.TravelEntity.AccountEntity;
+
+@WebServlet("/Account")
+public class Account extends HttpServlet {
+	private static final long serialVersionUID = 11;
+	private AccountDa accDa;
+	private AccountEntity accEnt;
+	private String user, pass;
+	private ArrayList<AccountEntity> list;
+	public Account(){
+	super();
+	accDa = new AccountDa();
+	accEnt = new AccountEntity();
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html");
+		user = request.getParameter("username");
+		pass = request.getParameter("password");
+		list = accDa.samPle();
+		if(list.size()>0){
+		RequestDispatcher rd =request.getRequestDispatcher("C-Usermanagement.jsp");
+		request.setAttribute("accList", list);
+	    rd.forward(request,response);
+		}
+		/*if(user.trim().length() > 0 && pass.trim().length() > 0)
+		{
+			accEnt.setUsername(user);
+			accEnt.setPassword(pass);
+			if(accDa.checkAccount())
+			{
+				 RequestDispatcher rd =request.getRequestDispatcher("Dashboard.html");  
+			     rd.forward(request,response);
+			}
+			else{
+				RequestDispatcher rd =request.getRequestDispatcher("False.html");  
+			     rd.forward(request,response);
+			}
+		}
+		else {
+			RequestDispatcher rd =request.getRequestDispatcher("Emptyvalues.html");  
+		     rd.forward(request,response);
+		     }*/
+	}
+}

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-06-18T12:50:10 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="_ReportTravelBudgetPlanSubreport" pageWidth="400" pageHeight="301" orientation="Landscape" columnWidth="400" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="701b2c41-b2ff-4e79-b02d-20b1b29121b6">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bps_ptms"/>
+	<parameter name="tono" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+	  plan.`tono`,
+	  plan.`food`,
+	  plan.`allowance`,
+	  plan.`accommodation`,
+	  plan.`transportation`,
+	  plan.`perdiem`,
+	  sv.total AS onTravel
+	FROM `bps_ptms`.`ptms_t_travelplan` AS plan
+	INNER JOIN (
+	SELECT
+	 CONCAT(REPLACE(REPLACE(REPLACE(tos.todate,'-',''),':',''),' ','')) AS tono
+	, emp.nym
+	, emp.`department`
+	, CONCAT(IFNULL(des.`code`,''),' ',IFNULL(des.`state`,''),' ',IFNULL(des.`city`,''),', ',IFNULL(des.`country`,'')) AS destination
+	, prior.`priority`
+	FROM ptms_t_travelorder AS tos
+	INNER JOIN ptms_r_priority AS prior
+	ON tos.priorityid = prior.`id`
+	LEFT JOIN (SELECT  emp.`id`, CONCAT(emp.`lastname`,', ',emp.`firstname`,' ',emp.`middlename`) AS nym, dept.`department`
+	FROM ptms_m_employee AS emp
+	INNER JOIN ptms_r_department AS dept
+	ON emp.`departmentid` = dept.`id`) AS emp
+	ON tos.employeeid = emp.`id`
+	INNER JOIN ptms_r_destination AS des
+	ON tos.`destinationid` = des.`id`
+	WHERE tos.`statusid` = 7
+	) AS tos
+	ON plan.`tono` = tos.tono
+	LEFT JOIN (SELECT approv.id, CONCAT(emp.`lastname`,', ',emp.`firstname`,' ',IFNULL(emp.`middlename`,''),', (',IFNULL(post.`position`,'User'),')' ) AS nym FROM ptms_m_approvingofficer AS approv
+	INNER JOIN ptms_m_employee AS emp
+	ON approv.employeeid = emp.`id`
+	LEFT JOIN ptms_r_position AS post
+	ON emp.`positionid` = post.`id`) AS app
+	ON plan.officerid = app.id
+	INNER JOIN ptms_r_status AS stat
+	ON plan.`statusid` = stat.`id`
+	LEFT JOIN (
+		SELECT lst.travelplanid, (SUM(IFNULL(sv.`amount`,0.00)) + SUM(IFNULL(misc.amount,0.00))) AS total
+		FROM ptms_t_travelplanlist AS lst
+		LEFT JOIN ptms_m_services AS sv
+		ON lst.serviceid = sv.id
+		LEFT JOIN ptms_m_miscellaneous misc
+		ON lst.`id` = misc.`planlistid`
+		GROUP BY lst.travelplanid
+	) AS sv
+	ON plan.id = sv.travelplanid
+	WHERE plan.tono = $P{tono} 
+	GROUP BY plan.id]]>
+	</queryString>
+	<field name="tono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="food" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="allowance" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="accommodation" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="transportation" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="perdiem" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="onTravel" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="301" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<rectangle>
+				<reportElement x="0" y="30" width="399" height="271" uuid="d828abff-3e66-493c-8ca4-0c8427ec24f2">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="399" height="30" backcolor="#047FC7" uuid="a7a24558-0265-40f9-8901-7a2a14b98536">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="39" y="1" width="321" height="29" forecolor="#FFFFFF" uuid="48d3ca7d-e1a5-4ae5-a97e-fc8aa50c8270"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="18"/>
+					</textElement>
+					<text><![CDATA[Planning]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement x="10" y="50" width="109" height="20" uuid="35de6976-9011-471f-b106-b1d435bc2f3b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Acommodation:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="80" width="109" height="20" uuid="f7c3b364-9414-4889-80c1-7300f967f5da"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transportation:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="110" width="109" height="20" uuid="20ae1769-4615-42fa-b381-53396bf285d2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Food:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="140" width="109" height="20" uuid="46f64a4d-4bdd-47dc-9a21-fb5d65a198a8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Perdiem:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="170" width="108" height="20" uuid="a1d89293-f7ae-434e-886d-0fafb43f47e3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Allowance:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="200" width="109" height="20" uuid="74f12698-1149-4113-9f2a-351fed69e95f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[On-Travel:]]></text>
+			</staticText>
+			<textField pattern="P#,##0.00#;(#,##0.00#)">
+				<reportElement x="120" y="110" width="260" height="20" uuid="02b82d71-e4a8-48e3-9961-3a8247dc48e3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{food}]]></textFieldExpression>
+			</textField>
+			<textField pattern="P#,##0.00#;(#,##0.00#)">
+				<reportElement x="120" y="170" width="260" height="20" uuid="8a2fcb6b-34e9-4459-b656-4f79c0534425"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{allowance}]]></textFieldExpression>
+			</textField>
+			<textField pattern="P#,##0.00#;(#,##0.00#)">
+				<reportElement x="120" y="80" width="260" height="20" uuid="8f3f9579-9391-455e-b022-32da4d911875"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transportation}]]></textFieldExpression>
+			</textField>
+			<textField pattern="P#,##0.00#;(#,##0.00#)">
+				<reportElement x="120" y="50" width="260" height="20" uuid="8e78da77-8e6c-491d-b97f-891567c302ef"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{accommodation}]]></textFieldExpression>
+			</textField>
+			<textField pattern="P#,##0.00#;(#,##0.00#)">
+				<reportElement x="120" y="140" width="260" height="20" uuid="27f6c18f-d3bc-47d7-9175-3283d5f3c579"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{perdiem}]]></textFieldExpression>
+			</textField>
+			<textField pattern="P#,##0.00#;(#,##0.00#)">
+				<reportElement x="119" y="200" width="260" height="20" uuid="58d14d8e-1009-4804-99a7-b37f2422ccf6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{onTravel}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

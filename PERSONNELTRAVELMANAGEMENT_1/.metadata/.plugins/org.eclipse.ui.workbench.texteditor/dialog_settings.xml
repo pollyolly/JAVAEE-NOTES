@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="257" key="DIALOG_WIDTH"/>
+		<item value="176" key="DIALOG_Y_ORIGIN"/>
+		<item value="386" key="DIALOG_HEIGHT"/>
+		<item value="51" key="DIALOG_X_ORIGIN"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="true" key="wrap"/>
+		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="false" key="wholeword"/>
+		<item value="getSupportDocument" key="selection"/>
+		<list key="findhistory">
+			<item value="getSupportDocument"/>
+			<item value="insertServiceProvider"/>
+			<item value="getApprovingOfficerId"/>
+			<item value="insertStatus"/>
+			<item value="CashAdvanceOfficer"/>
+			<item value="TravelOrderOfficer"/>
+			<item value="getTravelPlan"/>
+			<item value="getServicesType"/>
+		</list>
+		<list key="replacehistory">
+			<item value="bill"/>
+			<item value="datepicker2"/>
+			<item value="col-sm-6"/>
+			<item value="col-sm-8"/>
+			<item value="col-sm-4"/>
+		</list>
+	</section>
+</section>

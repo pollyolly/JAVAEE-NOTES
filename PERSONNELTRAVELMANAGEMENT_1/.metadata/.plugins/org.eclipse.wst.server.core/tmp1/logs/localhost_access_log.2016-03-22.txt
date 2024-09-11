@@ -1,0 +1,5 @@
+127.0.0.1 - - [22/Mar/2016:00:27:59 +0800] "GET / HTTP/1.1" 404 951
+0:0:0:0:0:0:0:1 - - [22/Mar/2016:00:28:03 +0800] "GET /PersonnelTravelManagementWeb/Dashboardmanager.jsp HTTP/1.1" 200 18053
+0:0:0:0:0:0:0:1 - - [22/Mar/2016:00:30:32 +0800] "GET /PersonnelTravelManagementWeb/Dashboard.jsp HTTP/1.1" 200 21023
+0:0:0:0:0:0:0:1 - - [22/Mar/2016:00:30:43 +0800] "GET /PersonnelTravelManagementWeb/Dashboard.jsp HTTP/1.1" 200 21023
+0:0:0:0:0:0:0:1 - - [22/Mar/2016:00:30:47 +0800] "GET /PersonnelTravelManagementWeb/Dashboard HTTP/1.1" 200 21083

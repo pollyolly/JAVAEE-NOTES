@@ -1,0 +1,113 @@
+package com.Controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.TravelDa.CompanyPolicyDa;
+import com.TravelEntity.CompanyPolicyEntity;
+import com.google.gson.*;
+import com.HelperClasses.Helper;
+/**
+ * Servlet implementation class CompanyPolicy
+ */
+@WebServlet("/CompanyPolicy")
+public class CompanyPolicy extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private CompanyPolicyDa policyda;
+	private CompanyPolicyEntity policyentity;
+    private ArrayList<CompanyPolicyEntity> statlist, deptlist, alllist, alllistbyid; 
+    private RequestDispatcher rd;
+    String form, days, recamnt, maxexp, deptid, statid;
+    private Helper helper;
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public CompanyPolicy() {
+        super();
+        policyentity = new CompanyPolicyEntity();
+        policyda = new CompanyPolicyDa();
+        helper = new Helper();
+        // TODO Auto-generated constructor stub
+    }
+
+    
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		PrintWriter out = response.getWriter();
+		form = request.getParameter("forms");
+		switch(form){
+		case "addPolicy":
+			int day = helper.toInt(request.getParameter("expensedays"));
+			double amnt = helper.toDouble(request.getParameter("receiptamount"));
+			double maxexp = helper.toDouble(request.getParameter("maxexpense"));
+			int statid = helper.toInt(request.getParameter("status"));
+			int deptid = helper.toInt(request.getParameter("department"));
+			if(day > 0 && amnt > 0 && maxexp > 0 && statid > 0 && deptid > 0){
+				policyentity.setExpensedays(day);
+				policyentity.setReceiptamount(amnt);
+				policyentity.setMaxexpense(maxexp);
+				policyentity.setStatusid(statid);
+				policyentity.setDepartmentid(deptid);
+				policyda.insertCompanyPolicy(policyentity);
+				response.sendRedirect("Redirect?servletpage=CompanyPolicy");
+			}else{System.out.print("Empty add Policy");}
+			break;
+		case "editPolicy":
+			int day2 = helper.toInt(request.getParameter("expensedays2"));
+			double amnt2 = helper.toDouble(request.getParameter("receiptamount2"));
+			double maxexp2 = helper.toDouble(request.getParameter("maxexpense2"));
+			int statid2 = helper.toInt(request.getParameter("status2"));
+			int deptid2 = helper.toInt(request.getParameter("department2"));
+			int id = helper.toInt(request.getParameter("policyid"));
+			if(day2 > 0 && amnt2 > 0 && maxexp2 > 0 && statid2 > 0 && deptid2 > 0 && id > 0){
+				policyentity.setExpensedays(day2);
+				policyentity.setReceiptamount(amnt2);
+				policyentity.setMaxexpense(maxexp2);
+				policyentity.setStatusid(statid2);
+				policyentity.setDepartmentid(deptid2);
+				policyentity.setPolicyid(id);
+				policyda.updateCompanyPolicy(policyentity);
+			}else{System.out.print("Empty edit policy");}
+			break;
+		case "editForm":
+			int editid = helper.toInt(request.getParameter("policyid"));
+			alllistbyid = policyda.getAllCompanyPolicyListById(editid);
+			String jsons = new Gson().toJson(alllistbyid);
+			if (jsons.trim().length() > 0) {
+				out.print(jsons);
+				out.flush();
+				out.close();
+			} else {
+				System.out.print("Company empty jsonss");
+			}
+			break;
+		}
+		list(request, response);
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method 
+		list(request, response);
+	}
+	protected void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method 
+		statlist = policyda.getStatusList();
+		deptlist = policyda.getDepartmentList();
+		alllist = policyda.getAllCompanyPolicyList();
+		if(statlist.size() > 0 && deptlist.size() > 0 && alllist.size() > 0){
+			request.setAttribute("statuslist", statlist);
+			request.setAttribute("departmentlist", deptlist);
+			request.setAttribute("policylist", alllist);
+			rd = request.getRequestDispatcher("C-Companypolicy.jsp");
+			rd.include(request, response);
+		} else {System.out.print("company polic empty list");}
+	}
+}

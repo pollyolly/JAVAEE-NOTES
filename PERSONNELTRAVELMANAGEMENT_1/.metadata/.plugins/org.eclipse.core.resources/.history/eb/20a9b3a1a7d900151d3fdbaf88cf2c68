@@ -1,0 +1,38 @@
+$(document).ready(function() {
+	$('.service').select2({
+		
+		  ajax: {
+		    data: function (params) {
+		      var query = {
+		        search: params.term,
+		        page: params.page
+		      }
+		      // Query paramters will be ?search=[term]&page=[page]
+		      return query;
+		    }
+		  }
+		});
+});
+/*$('.serviceprovider').change(function (){
+var spid = $(".serviceprovider option:selected").val();
+//var datas = [];
+if (spid != null && spid != '')
+{
+		$.ajax({
+			url : "TravelPlanList",
+			type : "POST",
+			data : {
+				forms : "popuServices",
+				ids : spid
+			},
+			dataType: "JSON",
+			cache : "false",
+			success : function(data) {
+				$(".service2").empty();
+				$.each(data, function(i, item){
+					$(".service2").prepend('<option value="'+data[i].id+'">'+data[i].service+'</option>');
+				});
+			}
+		});
+}      
+}); */

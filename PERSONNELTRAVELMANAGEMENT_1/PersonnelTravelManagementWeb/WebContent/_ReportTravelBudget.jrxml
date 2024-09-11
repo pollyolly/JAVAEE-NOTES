@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-06-18T12:45:57 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="_ReportTravelPlan" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="e6b483a2-01c2-4928-a616-707d054be1bb">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bps_ptms"/>
+	<subDataset name="TravelBudgetDataset" uuid="0a2af1e3-0b2d-46c4-a69c-2bdf0b61b053">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<parameter name="tono" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT CONCAT(REPLACE(REPLACE(REPLACE(tos.todate,'-',''),':',''),' ','')) AS tono
+FROM ptms_t_travelorder AS tos
+WHERE CONCAT(REPLACE(REPLACE(REPLACE(tos.todate,'-',''),':',''),' ','')) = $P{tono}   AND tos.`statusid` = 7
+GROUP BY tono]]>
+	</queryString>
+	<field name="tono" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="87" splitType="Stretch">
+			<frame>
+				<reportElement isPrintRepeatedValues="false" mode="Opaque" x="-20" y="0" width="842" height="69" backcolor="#006699" uuid="9dcb3f9f-031b-4e78-a3b7-4a8a66b1f3e8"/>
+				<staticText>
+					<reportElement x="1" y="15" width="839" height="26" forecolor="#FFFFFF" uuid="98a349b4-6a72-4491-ae97-acba17e027b9"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="20" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Business Productivity Solution]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="1" y="41" width="801" height="20" forecolor="#FFFFFF" uuid="da8ce2f2-fda2-42b7-aaba-8d9b82ed8c9f"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Personnel Travel Management]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="598" y="49" width="120" height="20" forecolor="#FFFFFF" uuid="a6d51900-6c97-4b35-85e4-7f12d5453a23"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Travel Order No:]]></text>
+				</staticText>
+				<image scaleImage="FillFrame">
+					<reportElement isPrintRepeatedValues="false" x="200" y="0" width="73" height="69" uuid="450c4091-d0d8-4a34-b620-65ea0f4c48e6"/>
+					<imageExpression><![CDATA["C:/Users/roco/Desktop/PERSONNELTRAVELMANAGEMENT_1/PersonnelTravelManagementWeb/WebContent/assets/img/BPS_LOGO.png"]]></imageExpression>
+				</image>
+				<textField>
+					<reportElement x="710" y="48" width="120" height="17" forecolor="#FFFFFF" uuid="379b99dd-2b5b-4914-86a2-8aa491bd722d"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tono}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement key="" positionType="Float" isPrintRepeatedValues="false" x="-20" y="2" width="842" height="28" isPrintInFirstWholeBand="true" forecolor="#050505" uuid="500ab9b3-3434-4ac4-80d1-c2fab8e5f6f8">
+					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="20" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Budget]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="109" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="280" height="30" backcolor="#035480" uuid="b2d66bec-6dad-4d6f-9add-689c1f7827a2">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="39" y="0" width="201" height="30" forecolor="#FFFFFF" uuid="7b1f2c18-793e-4086-8d45-96dfa9c3f49d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="18"/>
+					</textElement>
+					<text><![CDATA[Plan & Expense]]></text>
+				</staticText>
+			</frame>
+			<rectangle>
+				<reportElement x="0" y="30" width="800" height="70" uuid="0b8cf129-d737-4934-a500-43f96ce88549"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="33" y="70" width="80" height="20" uuid="0b88f51a-2e0c-4935-ac6d-f6461a67df8d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Total Plan:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="40" width="100" height="20" uuid="6585a8bb-ff47-4412-adad-4cebc3ab5925"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Total Expense:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="40" width="100" height="20" uuid="6b407409-2052-49f3-bd3e-e727b0f5ac35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[CashAdvance:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="330" y="37" width="120" height="9" isRemoveLineWhenBlank="true" uuid="dfc95706-d50d-4f0d-bd8c-e9b250c78697"/>
+				<subreportParameter name="tono">
+					<subreportParameterExpression><![CDATA[$P{tono}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["../../_Cashadvance.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="112" y="66" width="117" height="10" isRemoveLineWhenBlank="true" uuid="4ee7857e-bf5a-4bc0-b46c-4df037209899">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="tono">
+					<subreportParameterExpression><![CDATA[$P{tono}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["../../_Plan.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="110" y="37" width="120" height="10" isRemoveLineWhenBlank="true" uuid="6f2632af-2feb-4820-afe1-aab2165b6954"/>
+				<subreportParameter name="tono">
+					<subreportParameterExpression><![CDATA[$P{tono}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["../../_Expense.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="21" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<subreport>
+				<reportElement isPrintRepeatedValues="false" x="0" y="7" width="380" height="9" uuid="68caec63-d206-4679-b99d-db4f5353bd8c"/>
+				<subreportParameter name="tono">
+					<subreportParameterExpression><![CDATA[$P{tono}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["../../_ReportTravelBudgetExpenseSubreport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="380" y="7" width="420" height="9" uuid="c2a93743-866d-4556-a8a0-e47916b0b200"/>
+				<subreportParameter name="tono">
+					<subreportParameterExpression><![CDATA[$P{tono}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["../../_ReportTravelBudgetPlanSubreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,36 @@
+$(document).ready(function() {
+	var vals = [];
+	$.ajax({
+		url : "TravelPlan",
+		type : "POST",
+		data : {
+			forms : "displayPlan"
+		},
+		dataType: "JSON",
+		cache : "false",
+		success : function(data) {
+			$("#dtono").html(data[0].tono);
+			$("#dfdate").html(data[0].fromdate);
+			$("#dtdate").html(data[0].todate);
+			$("#ddest").html(data[0].destination);
+			$("#doff").html(data[0].officername);
+			$("#daccomm").html(data[0].accommodation);
+			$("#dtranspo").html(data[0].transportation);
+			switch(data[0].status){
+			case "Approved":
+				$("#dstat").html('<span id="dstat" class="label label-success">Approved</span>');
+				break;
+			case "Rejected":
+				$("#dstat").html('<span id="dstat" class="label label-danger">Rejected</span>');
+				break;
+			default:
+				$("#dstat").html('<span id="dstat" class="label label-warning">Pending</span>');
+				break;
+			}
+			$.each(data, function(i, item){
+				vals.push(' '+data[i].name);
+			});
+			$('#demp').val(vals);
+		}
+	});
+});

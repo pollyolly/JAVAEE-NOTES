@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-03-20T07:27:12 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4_Landscape" pageWidth="400" pageHeight="301" orientation="Landscape" columnWidth="400" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="a1ac3bdf-bf9a-4428-9674-860447d2b354">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="tono" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+	tos.tono,
+	  typ.`type`,
+	  SUM(xplst.`amount`) AS amnt
+	FROM `bps_ptms`.`ptms_t_travelexpenselist` AS xplst
+	LEFT JOIN ptms_r_servicetype AS typ
+	ON xplst.`typeid` = typ.`id`
+	LEFT JOIN (
+		SELECT
+		tos.`id`
+		, CONCAT(REPLACE(REPLACE(REPLACE(tos.todate,'-',''),':',''),' ','')) AS tono
+		FROM ptms_t_travelorder AS tos
+	) AS tos
+	ON xplst.`orderid` = tos.id
+	WHERE tos.tono =   $P{tono} 
+	GROUP BY typ.`type`]]>
+	</queryString>
+	<field name="tono" class="java.lang.String"/>
+	<field name="type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="amnt" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="301" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="29" width="400" height="272" uuid="823b968a-3ea2-4040-8b56-3391b52cc44e">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<pieChart>
+				<chart evaluationTime="Report" renderType="image">
+					<reportElement isPrintRepeatedValues="false" x="10" y="40" width="380" height="250" isRemoveLineWhenBlank="true" uuid="69c99918-7f3a-428d-8347-b66a15a3b86c"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset maxCount="10">
+					<keyExpression><![CDATA[$F{type}]]></keyExpression>
+					<valueExpression><![CDATA[$F{amnt}]]></valueExpression>
+					<labelExpression><![CDATA[$F{type}]]></labelExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="400" height="29" backcolor="#047FC7" uuid="918f620b-7989-4102-8df8-272a2747aa5b">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="39" y="1" width="321" height="28" forecolor="#FFFFFF" uuid="9b5f8d16-771d-4ed1-9cbf-728459b1e5bf"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="18"/>
+					</textElement>
+					<text><![CDATA[Expense]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</summary>
+</jasperReport>
