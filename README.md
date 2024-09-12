@@ -1,7 +1,7 @@
 ### JAVAEE-NOTES
 
 ### Troubleshoot
-unable to find large files
+unable to send large git files
 ```
 $git config http.postBuffer 524288000
 ```
